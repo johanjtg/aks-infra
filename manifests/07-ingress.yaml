@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: main-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /   # Strip the path prefix before forwarding
+spec:
+  ingressClassName: nginx                            # Use the NGINX ingress controller we installed
+  rules:
+    - http:
+        paths:
+          - path: /                                  # All traffic at / goes to nginx
+            pathType: Prefix
+            backend:
+              service:
+                name: nginx-service                  # Must match the Service name in 03-service-loadbalancer.yaml
+                port:
+                  number: 80

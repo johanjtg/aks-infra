@@ -1,12 +1,12 @@
 apiVersion: v1
-kind: Service           # Type of resource: a Service
+kind: Service
 metadata:
-  name: nginx-service   # Name of this service
+  name: nginx-service
 spec:
-  type: LoadBalancer    # Creates a public Azure Load Balancer with external IP
+  type: ClusterIP           # Internal only — Ingress handles the public IP now
   selector:
-    app: nginx          # Routes traffic to ALL pods with label app=nginx
+    app: nginx
   ports:
     - protocol: TCP
-      port: 80          # Port the outside world connects to
-      targetPort: 80    # Port on the Pod to forward traffic to
+      port: 80
+      targetPort: 80
