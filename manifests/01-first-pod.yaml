@@ -1,0 +1,12 @@
+apiVersion: v1        # Which Kubernetes API version handles this resource
+kind: Pod             # The type of resource we're creating
+metadata:
+  name: my-first-pod  # Unique name for this Pod inside the cluster
+  labels:
+    app: nginx        # Key-value tag — used later to find/select this Pod
+spec:
+  containers:
+    - name: nginx             # Name of the container inside the Pod
+      image: nginx:latest     # Docker image to run (pulled from Docker Hub)
+      ports:
+        - containerPort: 80   # Port the container listens on (HTTP)

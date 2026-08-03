@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config          # Name used to reference this ConfigMap in Pods
+data:
+  APP_ENV: "production"       # Key-value pairs — plain text, non-sensitive
+  APP_REGION: "eastus"
+  MAX_CONNECTIONS: "100"

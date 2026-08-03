@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service           # Type of resource: a Service
+metadata:
+  name: nginx-service   # Name of this service
+spec:
+  type: LoadBalancer    # Creates a public Azure Load Balancer with external IP
+  selector:
+    app: nginx          # Routes traffic to ALL pods with label app=nginx
+  ports:
+    - protocol: TCP
+      port: 80          # Port the outside world connects to
+      targetPort: 80    # Port on the Pod to forward traffic to

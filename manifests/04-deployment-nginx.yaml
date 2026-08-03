@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+
+  selector:
+    matchLabels:
+      app: nginx
+
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.25
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "64Mi"
+            limits:
+              cpu: "250m"
+              memory: "128Mi"
+
+          env:
+            # From ConfigMap — non-sensitive values
+            - name: APP_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: nginx-config    # Name of the ConfigMap
+                  key: APP_ENV          # Which key to pull from it
+
+            - name: APP_REGION
+              valueFrom:
+                configMapKeyRef:
+                  name: nginx-config
+                  key: APP_REGION
+
+            # From Secret — sensitive values
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: nginx-secret    # Name of the Secret
+                  key: DB_PASSWORD      # Which key to pull from it
+
+            - name: API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: nginx-secret
+                  key: API_KEY
